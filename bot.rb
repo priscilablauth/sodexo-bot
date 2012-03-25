@@ -13,4 +13,5 @@ cities = spider.cities(states[22])
 agua_santa = cities[40]
 
 results = spider.search(agua_santa)
-puts results
+results.each { |result| puts "#{result}\n*****************\n"}
+

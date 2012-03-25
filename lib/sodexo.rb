@@ -28,14 +28,22 @@ module Spider
       select(city, :from => 'cboCidade')
       wait_until { all('select#cboBairro option').size > 1 }
       find_button('btnBuscarEstCid').click
-      results = all('table#dlDadosBusca tbody tr td').map do |result|
-        result.text
-      end
+      extract_results
     end
 
     private
     def fetch_cities
       all('select#cboCidade option')
+    end
+
+    def extract_results
+      results = all('table#dlDadosBusca tbody tr td table').map do |table|
+        lines = table.all('tr').map do |line|
+          line.text
+        end
+        lines.slice!(-1)
+        lines
+      end
     end
 
   end
