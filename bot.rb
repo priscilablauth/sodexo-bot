@@ -4,6 +4,7 @@ require 'capybara-webkit'
 Dir.glob(File.dirname(__FILE__) + '/lib/*') {|file| require file}
 
 Capybara.run_server = false
+Capybara.default_wait_time = 10
 Capybara.current_driver = :selenium
 Capybara.app_host = "http://webservices.maplink2.com.br"
 
