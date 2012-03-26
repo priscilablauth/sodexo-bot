@@ -4,8 +4,6 @@ module Spider
 
     def initialize(args)
       @name = args[:name]
-
-
       @address = args[:address]
     end
   end

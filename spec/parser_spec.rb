@@ -1,5 +1,3 @@
-
-
 require 'spec_helper'
 
 describe 'parsing venues from the website' do

@@ -16,20 +16,20 @@ db = {}
 states = spider.states
 
 states.each do |state|
-	db[state.to_sym] = {}
-	cities = spider.cities(state)
+  db[state.to_sym] = {}
+  cities = spider.cities(state)
 
-	cities.each do |city|
-		results = spider.search(state, city)
+  cities.each do |city|
+    results = spider.search(state, city)
 
-		venues = results.map do |result|
-			parser.parse(result)
-		end
+    venues = results.map do |result|
+      parser.parse(result)
+    end
 
-		db[state.to_sym][city.to_sym] = venues
+    db[state.to_sym][city.to_sym] = venues
 
-		spider.go_to_search_page
-	end
+    spider.go_to_search_page
+  end
 end
 
 require 'ruby-debug'

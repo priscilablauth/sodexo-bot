@@ -1,5 +1,3 @@
-
-
 module Spider
   class Address
     attr_reader :state, :city, :neighborhood, :street

@@ -14,9 +14,6 @@ module Spider
       args[:state] = split raw_venue[1]
       args[:city] = split camelize raw_venue[2]
       args[:neighborhood] = split camelize raw_venue[3]
-
-
-
       street = split(camelize raw_venue[4])
       args[:street] = street.strip unless street.nil?
 
@@ -30,7 +27,6 @@ module Spider
     def split(string)
       string.split(':')[1]
     end
-
   end
 end
 

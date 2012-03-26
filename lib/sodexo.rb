@@ -41,9 +41,8 @@ module Spider
       extract_results
     end
 
-
-
     private
+
     def fetch_cities
       all('select#cboCidade option')
     end
