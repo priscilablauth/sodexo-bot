@@ -9,7 +9,7 @@ describe 'parsing venues from the website' do
   end
 
   it 'parses them into Venues' do
-    @venue.should be_kind_of Spider::Venue
+    @venue.should be_kind_of Venue
   end
 
   it 'camelizes the title' do
@@ -17,7 +17,7 @@ describe 'parsing venues from the website' do
   end
 
   it 'parses the address correctly' do
-    expected_address = Spider::Address.new state: 'RS', city: 'Cacequi', neighborhood: 'Centro', street: 'R Bento Goncalves ,780 Terreo'
+    expected_address = Address.new state: 'RS', city: 'Cacequi', neighborhood: 'Centro', street: 'R Bento Goncalves ,780 Terreo'
     @venue.address.should == expected_address
   end
 end

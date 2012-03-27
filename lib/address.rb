@@ -1,17 +1,15 @@
-module Spider
-  class Address
-    attr_reader :state, :city, :neighborhood, :street
+class Address
+  include MongoMapper::EmbeddedDocument
 
-    def initialize(args)
-      @state = args[:state]
-      @city = args[:city]
-      @neighborhood = args[:neighborhood]
-      @street = args[:street]
-    end
+  key :state, String
+  key :city, String
+  key :neighborhood, String
+  key :street, String
 
-    def == (other)
-      @state == other.state and @city == other.city and @neighborhood == other.neighborhood and @street == other.street
-    end
+  belongs_to :venue
 
+  def == (other)
+    @state == other.state and @city == other.city and @neighborhood == other.neighborhood and @street == other.street
   end
+
 end

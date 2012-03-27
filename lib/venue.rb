@@ -1,10 +1,6 @@
-module Spider
-  class Venue
-    attr_reader :name, :address
+class Venue
+  include MongoMapper::Document
 
-    def initialize(args)
-      @name = args[:name]
-      @address = args[:address]
-    end
-  end
+  key :name, String
+  one :address
 end

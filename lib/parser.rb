@@ -5,7 +5,7 @@ module Spider
       args = {}
       args[:name] = camelize raw_venue[0]
       args[:address] = parse_address(raw_venue)
-      Venue.new(args)
+      venue = Venue.new(args)
     end
 
     private
@@ -16,7 +16,6 @@ module Spider
       args[:neighborhood] = split camelize raw_venue[3]
       street = split(camelize raw_venue[4])
       args[:street] = street.strip unless street.nil?
-
       Address.new(args)
     end
 
