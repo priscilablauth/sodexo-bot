@@ -1,8 +1,8 @@
 require 'bundler'
 Bundler.require :default, :web
 
-Dir.glob(File.dirname(__FILE__) + '/config/*') {|file| require file}
-Dir.glob(File.dirname(__FILE__) + '/lib/*') {|file| require file}
+Dir.glob(File.dirname(__FILE__) + '/config/*.rb') {|file| require file}
+Dir.glob(File.dirname(__FILE__) + '/lib/*.rb') {|file| require file}
 
 get '/near' do
   address = params[:address]

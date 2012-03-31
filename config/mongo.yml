@@ -1,0 +1,8 @@
+default: &default
+  connection: 'staff.mongohq.com'
+  database: 'aceita_sodexo'
+  user: 'netto'
+  password: 'netto123'
+
+test:
+  <<: *default
