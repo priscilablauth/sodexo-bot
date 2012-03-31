@@ -23,15 +23,19 @@ states = ['RS'] #only RS
 states.each do |state|
   db[state.to_sym] = {}
   cities = spider.cities(state)
-  cities = ['PORTO ALEGRE']
+  cities = ['VIAMAO']
 
   cities.each do |city|
     results = spider.search(state, city)
 
     venues = results.map do |result|
-      venue = parser.parse(result)
-      venue.save
-      venue
+      begin
+        venue = parser.parse(result)
+        venue.save
+        venue
+      rescue Exception => e
+        puts "#{e} -> #{result}"
+      end
     end
 
     db[state.to_sym][city.to_sym] = venues

@@ -4,8 +4,10 @@ module Spider
     def parse(raw_venue)
       args = {}
       args[:name] = camelize raw_venue[0]
-      args[:address] = parse_address(raw_venue)
+      address = parse_address(raw_venue)
       venue = Venue.new(args)
+      venue.address = address
+      venue
     end
 
     private

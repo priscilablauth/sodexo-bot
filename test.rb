@@ -6,7 +6,11 @@ require './config/mongo'
 
 Dir.glob(File.dirname(__FILE__) + '/lib/*') {|file| require file}
 
-Address.all.each do |address|
-  address.geocode
-  address.save
-end
+require 'ruby-debug'
+debugger
+
+Geocoder::Configuration.lookup = :yahoo
+
+puts Venue.first.address.geocoded?
+
+puts venue
