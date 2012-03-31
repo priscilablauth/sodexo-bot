@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'parsing venues from the website' do
 
   before(:all) do
-    parser = Spider::VenueParser.new
+    parser = Sodexo::VenueParser.new
     raw_venue = ["DA TERRA SUPERMERCADO", "Estado:RS", "Cidade:CACEQUI", "Bairro:CENTRO", "Endereco: R BENTO GONCALVES ,780 TERREO"]
     @venue = parser.parse(raw_venue)
   end

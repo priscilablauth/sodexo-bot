@@ -1,4 +1,4 @@
-module Spider
+module Sodexo
   class VenueParser
 
     def parse(raw_venue)

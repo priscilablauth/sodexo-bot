@@ -1,5 +1,5 @@
 # encoding: utf-8
-module Spider
+module Sodexo
   class Sodexo
     include Capybara::DSL
 
