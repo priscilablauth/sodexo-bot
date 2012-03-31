@@ -2,8 +2,8 @@ module Sodexo
   class Bot
 
     def initialize
-      @spider = Sodexo::Sodexo.new
-      @parser = Sodexo::VenueParser.new
+      @spider = Sodexo.new
+      @parser = VenueParser.new
     end
 
     def run(state, city)
