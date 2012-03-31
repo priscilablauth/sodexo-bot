@@ -1,14 +1,13 @@
 require 'bundler'
-Bundler.require
-require 'capybara/dsl'
-require './config/mongo'
+Bundler.require :default, :web
 
+Dir.glob(File.dirname(__FILE__) + '/config/*') {|file| require file}
 Dir.glob(File.dirname(__FILE__) + '/lib/*') {|file| require file}
 
 get '/near' do
   address = params[:address]
   radius = params[:radius] || 10
   content_type :json
-  ::Venue.near(address, radius).to_json(:include => :address , :except => :id)
+  ::Venue.near(address, radius).to_json(:include => :address , :except => [:id, :venue_id ])
 end
 

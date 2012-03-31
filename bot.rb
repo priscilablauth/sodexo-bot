@@ -1,44 +1,34 @@
-require 'capybara'
-require 'capybara/dsl'
-require 'capybara-webkit'
-require 'mongo_mapper'
-require 'geocoder'
+class SodexoBot
 
-require './config/mongo'
+  def run(selected_state, selected_city)
+    spider = Spider::Sodexo.new
+    parser = Spider::VenueParser.new
 
-Dir.glob(File.dirname(__FILE__) + '/lib/*') {|file| require file}
+    db = {}
+    states = spider.states
+    states = [selected_state] #only RS
 
-Capybara.run_server = false
-Capybara.default_wait_time = 10
-Capybara.current_driver = :selenium
-Capybara.app_host = "http://webservices.maplink2.com.br"
+    states.each do |state|
+      db[state.to_sym] = {}
+      cities = spider.cities(state)
+      cities = [selected_city]
 
-spider = Spider::Sodexo.new
-parser = Spider::VenueParser.new
+      cities.each do |city|
+        results = spider.search(state, city)
 
-db = {}
-states = spider.states
-states = ['RS'] #only RS
+        venues = results.map do |result|
+          begin
+            venue = parser.parse(result)
+            venue.save
+            venue
+          rescue Exception => e
+            puts "#{e} -> #{result}"
+          end
+        end
 
-states.each do |state|
-  db[state.to_sym] = {}
-  cities = spider.cities(state)
-  cities = ['VIAMAO']
-
-  cities.each do |city|
-    results = spider.search(state, city)
-
-    venues = results.map do |result|
-      begin
-        venue = parser.parse(result)
-        venue.save
-        venue
-      rescue Exception => e
-        puts "#{e} -> #{result}"
+        db[state.to_sym][city.to_sym] = venues
+        spider.go_to_search_page
       end
     end
-
-    db[state.to_sym][city.to_sym] = venues
-    spider.go_to_search_page
   end
 end
