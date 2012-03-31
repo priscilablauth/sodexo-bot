@@ -70,6 +70,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   bson_ext
   capybara
   capybara-webkit
