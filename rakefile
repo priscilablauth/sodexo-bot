@@ -7,6 +7,11 @@ Dir.glob(File.dirname(__FILE__) + '/lib/*') {|file| require file}
 
 desc 'scrap all the venues for a given city and store on the db'
 task :scrap do
+  state = ENV['state'].upcase
+  city = ENV['city'].upcase
+
+  puts "scrapping data for #{city} - #{state}"
+
   bot = SodexoBot.new
-  bot.run('RS', 'URUGUAIANA')
+  bot.run(state, city)
 end
