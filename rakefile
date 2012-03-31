@@ -1,6 +1,5 @@
 require 'bundler'
 Bundler.require
-require './bot'
 
 Dir.glob(File.dirname(__FILE__) + '/config/*') {|file| require file}
 Dir.glob(File.dirname(__FILE__) + '/lib/*') {|file| require file}
@@ -12,6 +11,11 @@ task :scrap do
 
   puts "scrapping data for #{city} - #{state}"
 
-  bot = SodexoBot.new
+  bot = Sodexo::Bot.new
   bot.run(state, city)
+end
+
+desc 'geocode all the venues in the database'
+task :geocode do
+  Sodexo::Geocoder.new.run
 end
