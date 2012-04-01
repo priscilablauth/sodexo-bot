@@ -10,4 +10,3 @@ get '/near' do
   content_type :json
   ::Venue.near(address, radius).to_json(:include => :address , :except => [:id, :venue_id ])
 end
-
