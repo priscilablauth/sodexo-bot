@@ -4,7 +4,7 @@ var Venue = function(name, coords){
 			return name;
 		},
 		latLng: function(){
-			new google.maps.LatLng(coords.latitude, coords.longitude);
+			return new google.maps.LatLng(coords.latitude, coords.longitude);
 		}
 	};
 };
