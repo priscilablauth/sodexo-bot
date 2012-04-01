@@ -1,7 +1,7 @@
-var Sodexo = function(map){
+var Sodexo = function(map, service){
 	var api = {};
 	
-	api.load = function(){
+	var load = function(){
 		navigator.geolocation.getCurrentPosition(initMap);
 	};
 	
@@ -18,9 +18,28 @@ var Sodexo = function(map){
 			map: map,
 			draggable: true,
 			animation: google.maps.Animation.DROP,
-			position: latLng
+			position: latLng,
+			title: 'Sua Localização'
 		});
 	};
+	
+	var pinVenue = function(venue){
+		new google.maps.Marker({
+			map: map,
+			draggable: false,
+			animation: google.maps.Animation.DROP,
+			position: venue.latLng(),
+			title: venue.name()
+		});
+	};
+	
+	api.fetch = function(){
+		service.near(function(venues){
+			_.each(venues, pinVenue);
+		});
+	};
+	
+	load();
 	
 	return api;
 };
