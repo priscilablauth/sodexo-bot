@@ -1,10 +1,7 @@
 var Venue = function(name, coords){
+  var latLng =  new google.maps.LatLng(coords.latitude, coords.longitude); new google.maps.LatLng(coords.latitude, coords.longitude);
 	return {
-		name: function(){
-			return name;
-		},
-		latLng: function(){
-			return new google.maps.LatLng(coords.latitude, coords.longitude);
-		}
+    name: name,
+    latLng: latLng
 	};
 };

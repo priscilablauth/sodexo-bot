@@ -7,31 +7,23 @@
       body { height: 100%; margin: 0; padding: 0 }
       #map_canvas { height: 100% }
     </style>
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBJFTySGBY5r23R6dLWMEbj64UW7lK4Qdg&sensor=true&language=pt-br">
-    </script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBJFTySGBY5r23R6dLWMEbj64UW7lK4Qdg&sensor=true&language=pt-br"></script>
 		<script type="text/javascript" src="javascripts/underscore-min.js"></script>
+
+		<script type="text/javascript" src="javascripts/jquery-1.7.2.min.js"></script>
 		<script type="text/javascript" src="javascripts/sodexo.js"></script>
 		<script type="text/javascript" src="javascripts/venue.js"></script>
+		<script type="text/javascript" src="javascripts/venueService.js"></script>
     <script type="text/javascript">
       function initialize() {
       	var options = {
         	zoom: 15,
         	mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-		
-				var service = function(){
-					return {
-						near: function(callback){
-							var panorama = Venue('Panorama 40 Lanch', {longitude: -51.1737907, latitude: -30.0611829});
-							var pizzaria = Venue('Piz. So Pizzas', {longitude: -51.1945978, latitude: -30.0582651});
-							callback([panorama, pizzaria]);
-						}
-					};
-				}();
-		
-        var map = new google.maps.Map(document.getElementById("map_canvas"), options);
+
+			  var map = new google.maps.Map(document.getElementById("map_canvas"), options);
+        var service = VenueService();
 				var sodexo = Sodexo(map, service);
-				sodexo.fetch();
       }
     </script>
   </head>
