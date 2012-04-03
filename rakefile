@@ -1,4 +1,5 @@
 require 'bundler'
+require 'geocoder'
 require 'active_record'
 Bundler.require
 

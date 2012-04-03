@@ -56,7 +56,6 @@ module Sodexo
         break unless page.has_css? 'input#cmdNext'
         find('input#cmdNext').click
       end
-      results
     end
 
     def result_for_current_page
@@ -68,6 +67,5 @@ module Sodexo
         lines
       end
     end
-
   end
 end
