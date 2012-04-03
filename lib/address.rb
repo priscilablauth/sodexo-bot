@@ -1,5 +1,6 @@
 class Address < ActiveRecord::Base
 
+  geocoded_by :full_street_address
   belongs_to :venue
 
   def == (other)
@@ -10,7 +11,7 @@ class Address < ActiveRecord::Base
     "#{@street} - #{@city} - #{@state}"
   end
 
-  def human_readable
+  def full_street_address
     to_s
   end
 end

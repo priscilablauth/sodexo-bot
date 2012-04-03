@@ -13,9 +13,6 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     arel (3.0.2)
-    bson (1.6.1)
-    bson_ext (1.6.1)
-      bson (~> 1.6.1)
     builder (3.0.0)
     capybara (1.1.2)
       mime-types (>= 1.16)
@@ -41,17 +38,9 @@ GEM
     jasmine-core (1.1.0)
     json (1.6.5)
     mime-types (1.18)
-    mongo (1.6.1)
-      bson (~> 1.6.1)
-    mongo_mapper (0.11.0)
-      activemodel (~> 3.0)
-      activesupport (~> 3.0)
-      plucky (~> 0.4.0)
     multi_json (1.1.0)
     nokogiri (1.5.2)
     pg (0.13.2)
-    plucky (0.4.4)
-      mongo (~> 1.5)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
@@ -85,12 +74,10 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
-  bson_ext
   capybara
   capybara-webkit
   geocoder
   jasmine
-  mongo_mapper
   pg
   rspec
   sinatra
