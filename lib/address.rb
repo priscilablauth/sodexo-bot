@@ -1,4 +1,6 @@
-class Address
+class Address < ActiveRecord::Base
+
+  belongs_to :venue
 
   def == (other)
     @state == other.state and @city == other.city and @neighborhood == other.neighborhood and @street == other.street

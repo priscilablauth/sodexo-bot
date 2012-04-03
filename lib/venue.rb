@@ -1,5 +1,7 @@
 class Venue < ActiveRecord::Base
 
+  has_one :address
+
   def full_address
     self.address.to_s
   end
