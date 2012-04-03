@@ -1,8 +1,4 @@
-class Venue
-  include MongoMapper::Document
-
-  key :name, String
-  one :address
+class Venue < ActiveRecord::Base
 
   def full_address
     self.address.to_s

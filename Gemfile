@@ -5,7 +5,8 @@ gem 'capybara-webkit'
 gem 'mongo_mapper'
 gem 'bson_ext'
 gem 'geocoder'
-gem 'activesupport'
+gem 'activerecord'
+gem 'pg'
 
 group :web do
   gem 'sinatra'

@@ -1,0 +1,8 @@
+default: &default
+  adapter: 'postgresql'
+  database: 'aceita_sodexo'
+  username: 'postgres'
+  password: 'netto'
+
+test:
+  <<: *default
