@@ -1,6 +1,7 @@
 var Sodexo = function(map, service){
 	var api = {};
   var currentPosition;
+  var currentLocation;
 
 	var load = function(){
 		navigator.geolocation.getCurrentPosition(initMap);
@@ -17,13 +18,16 @@ var Sodexo = function(map, service){
 	};
 
 	var pinUserLocation = function(latLng){
-		new google.maps.Marker({
+		currentLocation = new google.maps.Marker({
 			map: map,
 			draggable: true,
 			animation: google.maps.Animation.DROP,
 			position: latLng,
 			title: 'Sua Localização'
 		});
+    google.maps.event.addListener(currentLocation, 'dragend', function(){
+      alert('oeee');
+    });
 	};
 
 	var pinVenue = function(venue){
@@ -32,7 +36,8 @@ var Sodexo = function(map, service){
 			draggable: false,
 			animation: google.maps.Animation.DROP,
 			position: venue.latLng,
-			title: venue.name
+			title: venue.name,
+      icon: '/images/restaurant.png'
 		});
 	};
 

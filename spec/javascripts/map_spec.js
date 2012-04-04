@@ -36,14 +36,15 @@ describe('SodexoMap', function(){
 		expect(calledWithCorrectArguments()).toBeTruthy();
 	});
 
-	it("fetches the closest venues which accepts sodexo", function(){
-				var pinOptions = {
-			map: map,
-			draggable: false,
-			animation: google.maps.Animation.DROP,
-			position: silva.latLng,
-			title: silva.name
-		};
+  it("fetches the closest venues which accepts sodexo", function(){
+    var pinOptions = {
+      map: map,
+      draggable: false,
+      animation: google.maps.Animation.DROP,
+      position: silva.latLng,
+      title: silva.name,
+      icon: '/images/restaurant.png'
+    };
 
 		var sodexo = Sodexo(map, service);
 		var pinnedSilva = Mocks.fakeMarkerToExpect(pinOptions);
@@ -60,5 +61,17 @@ describe('SodexoMap', function(){
     var params = { position: coords, radius: 1 };
     var serverParams = service.near.mostRecentCall.args[0];
     expect(params).toEqual(serverParams);
+  });
+
+
+  describe('moving the pin around', function(){
+    it('fetches new venues from the server', function(){
+      var currentLocation = new google.maps.Marker({});
+      google.maps.Marker = function(){
+        return currentLocation;
+      };
+      var sodexo = Sodexo(map, service);
+      google.maps.event.trigger(currentLocation, 'dragend');
+    });
   });
 });
