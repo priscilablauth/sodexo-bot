@@ -1,5 +1,5 @@
 describe('SodexoMap', function(){
-	var map, coords;
+	var map, coords, service, silva, service;
 
 	beforeEach(function(){
 		map = function(){
@@ -8,6 +8,9 @@ describe('SodexoMap', function(){
 			}
 		}();
 
+    silva = Venue('Silva', { latitude: 10, longitude: 15 } );
+		service = Mocks.venueService([silva]);
+
 		coords = { latitude: -10, longitude: -20 };
 		Mocks.fakeCurrentPositionTo(coords);
 		Mocks.fakeMarkerToExpect({});
@@ -15,7 +18,7 @@ describe('SodexoMap', function(){
 
 	it("centers it to the user's location", function(){
 		spyOn(map, 'setCenter');
-		var sodexo = Sodexo(map);
+		var sodexo = Sodexo(map, service);
 		var expectedLocation = new google.maps.LatLng(coords.latitude, coords.longitude);
 		expect(map.setCenter).toHaveBeenCalledWith(expectedLocation);
 	});
@@ -29,15 +32,12 @@ describe('SodexoMap', function(){
 			title: 'Sua Localização'
 		};
 		var calledWithCorrectArguments = Mocks.fakeMarkerToExpect(pinOptions);
- 		var sodexo = Sodexo(map);
+ 		var sodexo = Sodexo(map, service);
 		expect(calledWithCorrectArguments()).toBeTruthy();
 	});
 
 	it("fetches the closest venues which accepts sodexo", function(){
-		var silva = Venue('Silva', { latitude: 10, longitude: 15 } );
-		var service = Mocks.venueService([silva]);
-
-		var pinOptions = {
+				var pinOptions = {
 			map: map,
 			draggable: false,
 			animation: google.maps.Animation.DROP,
@@ -57,7 +57,7 @@ describe('SodexoMap', function(){
     spyOn(service, 'near');
     var sodexo = Sodexo(map, service);
     sodexo.fetch();
-    var params = { position: coords, radius: 10 };
+    var params = { position: coords, radius: 1 };
     var serverParams = service.near.mostRecentCall.args[0];
     expect(params).toEqual(serverParams);
   });

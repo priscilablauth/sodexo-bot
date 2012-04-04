@@ -9,7 +9,7 @@ var Sodexo = function(map, service){
 	var initMap = function(position){
 		var lat = position.coords.latitude;
 		var lng = position.coords.longitude;
-    	currentPosition = position.coords;
+    currentPosition = position.coords;
 		var latLng = new google.maps.LatLng(lat, lng);
 		map.setCenter(latLng);
 		pinUserLocation(latLng);
@@ -39,7 +39,7 @@ var Sodexo = function(map, service){
 	api.fetch = function(){
     var params = {
       position: currentPosition,
-      radius: 10
+      radius: 1
     };
 		service.near(params, function(venues){
 			_.each(venues, pinVenue);

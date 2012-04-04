@@ -12,8 +12,9 @@ var VenueService = function(){
   };
 
   var toVenue = function(rawVenue){
+    rawVenue = rawVenue.venue;
     var address = rawVenue.address;
-    var position = {latitude: address.coordinates[1], longitude: address.coordinates[0] };
+    var position = {latitude: address.latitude, longitude: address.longitude };
     return Venue(rawVenue.name, position);
   };
 

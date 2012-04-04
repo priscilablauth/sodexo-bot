@@ -21,8 +21,11 @@ module Sodexo
     private
     def store(result)
       venue = @parser.parse(result)
-      venue.save
-      venue
+      venues_with_same_name = Venue.where(:name => venue.name)
+      already_exists = venues_with_same_name.any? do |venue_with_same_name|
+        venue_with_same_name.address.street == venue.address.street
+      end
+      venue.save unless already_exists
     end
   end
 end

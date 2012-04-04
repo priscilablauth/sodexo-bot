@@ -1,4 +1,5 @@
 require 'bundler'
+require 'active_record'
 Bundler.require :default, :web
 
 Dir.glob(File.dirname(__FILE__) + '/config/*.rb') {|file| require file}
@@ -9,5 +10,5 @@ get '/near' do
   lng = params[:longitude]
   radius = params[:radius] || 10
   content_type :json
-  ::Venue.near(Geocoder.address([lat, lng]), radius).to_json(:include => :address , :except => [:id, :venue_id ])
+  ::Venue.near([lat, lng], radius).to_json(:include => :address , :except => [:id, :venue_id ])
 end
