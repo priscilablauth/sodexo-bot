@@ -1,57 +1,57 @@
 describe('Sodexo.Map', function(){
-	var map, coords, service, silva, service, loadedCallback;
+  var map, coords, service, silva, service, loadedCallback;
 
-	beforeEach(function(){
-		map = function(){
-			return {
-				setCenter: function(){}
-			}
-		}();
+  beforeEach(function(){
+    map = function(){
+      return {
+        setCenter: function(){}
+      }
+    }();
 
     loadedCallback = jasmine.createSpy('loaded');
     silva = Venue('Silva', { latitude: 10, longitude: 15 } );
-		service = Mocks.venueService([silva]);
+    service = Mocks.venueService([silva]);
 
-		coords = { latitude: -10, longitude: -20 };
-		Mocks.fakeCurrentPositionTo(coords);
-		Mocks.fakeMarkerToExpect({});
-	});
+    coords = { latitude: -10, longitude: -20 };
+    Mocks.fakeCurrentPositionTo(coords);
+    Mocks.fakeMarkerToExpect({});
+  });
 
-	it("centers it to the user's location", function(){
-		spyOn(map, 'setCenter');
-		var sodexoMap = Sodexo.Map(map, service, loadedCallback);
-		var expectedLocation = new google.maps.LatLng(coords.latitude, coords.longitude);
-		expect(map.setCenter).toHaveBeenCalledWith(expectedLocation);
-	});
+  it("centers it to the user's location", function(){
+    spyOn(map, 'setCenter');
+    var sodexoMap = Sodexo.Map(map, service, loadedCallback);
+    var expectedLocation = new google.maps.LatLng(coords.latitude, coords.longitude);
+    expect(map.setCenter).toHaveBeenCalledWith(expectedLocation);
+  });
 
-	it("pins the user location on the map", function(){
-		var pinOptions = {
-			map: map,
-			draggable: true,
-			animation: google.maps.Animation.DROP,
-			position: new google.maps.LatLng(coords.latitude, coords.longitude),
-			title: 'Sua Localização'
-		};
-		var calledWithCorrectArguments = Mocks.fakeMarkerToExpect(pinOptions);
- 		var sodexoMap = Sodexo.Map(map, service, loadedCallback);
-		expect(calledWithCorrectArguments()).toBeTruthy();
-	});
+  it("pins the user location on the map", function(){
+    var pinOptions = {
+      map: map,
+    draggable: true,
+    animation: google.maps.Animation.DROP,
+    position: new google.maps.LatLng(coords.latitude, coords.longitude),
+    title: 'Sua Localização'
+    };
+    var calledWithCorrectArguments = Mocks.fakeMarkerToExpect(pinOptions);
+    var sodexoMap = Sodexo.Map(map, service, loadedCallback);
+    expect(calledWithCorrectArguments()).toBeTruthy();
+  });
 
   it("fetches the closest venues which accept sodexoMap", function(){
     var pinOptions = {
       map: map,
-      draggable: false,
-      animation: google.maps.Animation.DROP,
-      position: silva.latLng,
-      title: silva.name,
-      icon: '/images/restaurant.png'
+    draggable: false,
+    animation: google.maps.Animation.DROP,
+    position: silva.latLng,
+    title: silva.name,
+    icon: '/images/restaurant.png'
     };
 
-		var sodexoMap = Sodexo.Map(map, service, loadedCallback);
-		var pinnedSilva = Mocks.fakeMarkerToExpect(pinOptions);
-		sodexoMap.fetch();
-		expect(pinnedSilva()).toBeTruthy();
-	});
+    var sodexoMap = Sodexo.Map(map, service, loadedCallback);
+    var pinnedSilva = Mocks.fakeMarkerToExpect(pinOptions);
+    sodexoMap.fetch();
+    expect(pinnedSilva()).toBeTruthy();
+  });
 
   it('calls the service with the current location', function(){
     var silva = Venue('Silva', { latitude: 10, longitude: 15 } );
