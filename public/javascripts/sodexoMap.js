@@ -1,4 +1,4 @@
-var Sodexo = function(map, service){
+var SodexoMap = function(map, service){
 	var api = {};
   var currentPosition;
   var currentLocation;
@@ -25,9 +25,6 @@ var Sodexo = function(map, service){
 			position: latLng,
 			title: 'Sua Localização'
 		});
-    google.maps.event.addListener(currentLocation, 'dragend', function(){
-      alert('oeee');
-    });
 	};
 
 	var pinVenue = function(venue){
