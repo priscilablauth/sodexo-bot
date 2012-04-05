@@ -1,4 +1,4 @@
-describe('SodexoMap', function(){
+describe('SodexoMapMap', function(){
 	var map, coords, service, silva, service;
 
 	beforeEach(function(){
@@ -18,7 +18,7 @@ describe('SodexoMap', function(){
 
 	it("centers it to the user's location", function(){
 		spyOn(map, 'setCenter');
-		var sodexo = Sodexo(map, service);
+		var sodexoMap = SodexoMap(map, service);
 		var expectedLocation = new google.maps.LatLng(coords.latitude, coords.longitude);
 		expect(map.setCenter).toHaveBeenCalledWith(expectedLocation);
 	});
@@ -32,11 +32,11 @@ describe('SodexoMap', function(){
 			title: 'Sua Localização'
 		};
 		var calledWithCorrectArguments = Mocks.fakeMarkerToExpect(pinOptions);
- 		var sodexo = Sodexo(map, service);
+ 		var sodexoMap = SodexoMap(map, service);
 		expect(calledWithCorrectArguments()).toBeTruthy();
 	});
 
-  it("fetches the closest venues which accepts sodexo", function(){
+  it("fetches the closest venues which accepts sodexoMap", function(){
     var pinOptions = {
       map: map,
       draggable: false,
@@ -46,9 +46,9 @@ describe('SodexoMap', function(){
       icon: '/images/restaurant.png'
     };
 
-		var sodexo = Sodexo(map, service);
+		var sodexoMap = SodexoMap(map, service);
 		var pinnedSilva = Mocks.fakeMarkerToExpect(pinOptions);
-		sodexo.fetch();
+		sodexoMap.fetch();
 		expect(pinnedSilva()).toBeTruthy();
 	});
 
@@ -56,8 +56,8 @@ describe('SodexoMap', function(){
     var silva = Venue('Silva', { latitude: 10, longitude: 15 } );
     var service = Mocks.venueService([silva]);
     spyOn(service, 'near');
-    var sodexo = Sodexo(map, service);
-    sodexo.fetch();
+    var sodexoMap = SodexoMap(map, service);
+    sodexoMap.fetch();
     var params = { position: coords, radius: 1 };
     var serverParams = service.near.mostRecentCall.args[0];
     expect(params).toEqual(serverParams);
@@ -70,7 +70,7 @@ describe('SodexoMap', function(){
       google.maps.Marker = function(){
         return currentLocation;
       };
-      var sodexo = Sodexo(map, service);
+      var sodexoMap = SodexoMap(map, service);
       google.maps.event.trigger(currentLocation, 'dragend');
     });
   });
