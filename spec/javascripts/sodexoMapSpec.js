@@ -1,5 +1,5 @@
-describe('SodexoMapMap', function(){
-	var map, coords, service, silva, service;
+describe('Sodexo.Map', function(){
+	var map, coords, service, silva, service, loadedCallback;
 
 	beforeEach(function(){
 		map = function(){
@@ -8,6 +8,7 @@ describe('SodexoMapMap', function(){
 			}
 		}();
 
+    loadedCallback = jasmine.createSpy('loaded');
     silva = Venue('Silva', { latitude: 10, longitude: 15 } );
 		service = Mocks.venueService([silva]);
 
@@ -18,7 +19,7 @@ describe('SodexoMapMap', function(){
 
 	it("centers it to the user's location", function(){
 		spyOn(map, 'setCenter');
-		var sodexoMap = SodexoMap(map, service);
+		var sodexoMap = Sodexo.Map(map, service, loadedCallback);
 		var expectedLocation = new google.maps.LatLng(coords.latitude, coords.longitude);
 		expect(map.setCenter).toHaveBeenCalledWith(expectedLocation);
 	});
@@ -32,11 +33,11 @@ describe('SodexoMapMap', function(){
 			title: 'Sua Localização'
 		};
 		var calledWithCorrectArguments = Mocks.fakeMarkerToExpect(pinOptions);
- 		var sodexoMap = SodexoMap(map, service);
+ 		var sodexoMap = Sodexo.Map(map, service, loadedCallback);
 		expect(calledWithCorrectArguments()).toBeTruthy();
 	});
 
-  it("fetches the closest venues which accepts sodexoMap", function(){
+  it("fetches the closest venues which accept sodexoMap", function(){
     var pinOptions = {
       map: map,
       draggable: false,
@@ -46,7 +47,7 @@ describe('SodexoMapMap', function(){
       icon: '/images/restaurant.png'
     };
 
-		var sodexoMap = SodexoMap(map, service);
+		var sodexoMap = Sodexo.Map(map, service, loadedCallback);
 		var pinnedSilva = Mocks.fakeMarkerToExpect(pinOptions);
 		sodexoMap.fetch();
 		expect(pinnedSilva()).toBeTruthy();
@@ -56,22 +57,16 @@ describe('SodexoMapMap', function(){
     var silva = Venue('Silva', { latitude: 10, longitude: 15 } );
     var service = Mocks.venueService([silva]);
     spyOn(service, 'near');
-    var sodexoMap = SodexoMap(map, service);
+    var sodexoMap = Sodexo.Map(map, service, loadedCallback);
     sodexoMap.fetch();
     var params = { position: coords, radius: 1 };
     var serverParams = service.near.mostRecentCall.args[0];
     expect(params).toEqual(serverParams);
   });
 
-
-  describe('moving the pin around', function(){
-    it('fetches new venues from the server', function(){
-      var currentLocation = new google.maps.Marker({});
-      google.maps.Marker = function(){
-        return currentLocation;
-      };
-      var sodexoMap = SodexoMap(map, service);
-      google.maps.event.trigger(currentLocation, 'dragend');
-    });
+  it('calls the loadedCallBack after pinning the user location', function(){
+    var sodexoMap = Sodexo.Map(map, service, loadedCallback);
+    expect(loadedCallback).toHaveBeenCalled();
   });
+
 });

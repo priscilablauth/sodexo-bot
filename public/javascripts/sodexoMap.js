@@ -1,7 +1,7 @@
-var SodexoMap = function(map, service){
+Sodexo.Map = function(map, service, loadedCallback){
 	var api = {};
-  var currentPosition;
-  var currentLocation;
+  api.currentLocation = {};
+  var venues = [];
 
 	var load = function(){
 		navigator.geolocation.getCurrentPosition(initMap);
@@ -10,15 +10,14 @@ var SodexoMap = function(map, service){
 	var initMap = function(position){
 		var lat = position.coords.latitude;
 		var lng = position.coords.longitude;
-    currentPosition = position.coords;
 		var latLng = new google.maps.LatLng(lat, lng);
 		map.setCenter(latLng);
 		pinUserLocation(latLng);
-		api.fetch();
+    loadedCallback();
 	};
 
 	var pinUserLocation = function(latLng){
-		currentLocation = new google.maps.Marker({
+		api.currentLocation = new google.maps.Marker({
 			map: map,
 			draggable: true,
 			animation: google.maps.Animation.DROP,
@@ -28,7 +27,7 @@ var SodexoMap = function(map, service){
 	};
 
 	var pinVenue = function(venue){
-		new google.maps.Marker({
+		var venue = new google.maps.Marker({
 			map: map,
 			draggable: false,
 			animation: google.maps.Animation.DROP,
@@ -36,16 +35,33 @@ var SodexoMap = function(map, service){
 			title: venue.name,
       icon: '/images/restaurant.png'
 		});
+    venues.push(venue);
 	};
 
+  var currentPosition = function(){
+    var position = api.currentLocation.position;
+    return {
+      latitude: position.Xa || position.Ta,
+      longitude: position.Ya || position.Ua
+    };
+  };
+
+  var cleanOldVenues = function(){
+    _.each(venues, function(venue){
+      venue.setMap(null);
+    });
+  };
+
 	api.fetch = function(){
+    console.log(api.currentLocation.position)
     var params = {
-      position: currentPosition,
+      position: currentPosition(),
       radius: 1
     };
 		service.near(params, function(venues){
 			_.each(venues, pinVenue);
 		});
+    cleanOldVenues();
 	};
 
 	load();

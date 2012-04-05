@@ -6,7 +6,7 @@ describe('fetching the venues from the server', function(){
       options.success(testResponses.venues());
     });
     callback = jasmine.createSpy('success');
-    service = VenueService();
+    service = Sodexo.VenueService();
     var position = new google.maps.LatLng(-10, -20);
     params = { position: { latitude: position.lat(), longitude: position.lng() } , radius: 1 } ;
     service.near(params, callback);

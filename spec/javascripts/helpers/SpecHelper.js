@@ -28,6 +28,11 @@ var Mocks = function(){
 			if (_.isEqual(options, pinOptions)){
 					called = true;
 			}
+
+      return {
+        position: options.position,
+        setMap: function(){}
+      };
 		};
 		return function(){
 			return called;

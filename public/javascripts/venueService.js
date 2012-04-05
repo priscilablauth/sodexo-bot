@@ -1,4 +1,4 @@
-var VenueService = function(){
+Sodexo.VenueService = function(){
   var api = {};
 
   api.near = function(params, callback){
