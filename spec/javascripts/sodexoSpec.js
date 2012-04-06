@@ -1,10 +1,12 @@
 describe('Sodexo.Page', function(){
-  var dom, mapCanvas, theMap, theService, mockSodexoMap;
+  var dom, mapCanvas, theMap, theService, mockSodexoMap, addressInput;
 
   beforeEach(function(){
     mapCanvas = $('</div>');
+    addressInput = $('</input>');
     dom = {
-      mapCanvas: function(){ return mapCanvas; }
+      mapCanvas: function(){ return mapCanvas; },
+      addressInput: function() { return addressInput; }
     };
    theMap = function(){};
     spyOn(google.maps, 'Map').andReturn(theMap);
@@ -30,4 +32,8 @@ describe('Sodexo.Page', function(){
     expect(usedService).toBe(theService);
     expect(usedMap).toBe(theMap);
   });
+
+  it('fetches the venues when a new address is submitted', function(){
+  });
+
 });

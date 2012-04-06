@@ -13,9 +13,7 @@ Sodexo.Page = function(dom){
   };
 
   var bindEvents = function(){
-    google.maps.event.addListener(sodexoMap.currentLocation, 'dragend', function(){
-      sodexoMap.fetch();
-    });
+    google.maps.event.addListener(sodexoMap.currentLocation, 'dragend', sodexoMap.fetch);
   };
 
   var onMapLoad = function(){
@@ -23,5 +21,5 @@ Sodexo.Page = function(dom){
     sodexoMap.fetch();
   };
 
-   init();
+  init();
 };

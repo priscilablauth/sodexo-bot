@@ -53,7 +53,6 @@ Sodexo.Map = function(map, service, loadedCallback){
   };
 
 	api.fetch = function(){
-    console.log(api.currentLocation.position)
     var params = {
       position: currentPosition(),
       radius: 1
@@ -63,7 +62,6 @@ Sodexo.Map = function(map, service, loadedCallback){
 		});
     cleanOldVenues();
 	};
-
 	load();
 
 	return api;
