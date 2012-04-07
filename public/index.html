@@ -20,7 +20,9 @@
             mapCanvas: function(){ return $('#map_canvas')[0]; },
             addressInput: function() { return $('#addressInput')[0]; }
           };
-          Sodexo.Page(dom);
+
+          var service = Sodexo.VenueService();
+          Sodexo.Page(dom, service);
       });
     </script>
   </head>

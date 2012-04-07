@@ -1,68 +1,56 @@
-Sodexo.Map = function(map, service, loadedCallback){
-	var api = {};
-  api.currentLocation = {};
-  var venues = [];
+Sodexo.Map = function (map, coords) {
+    var api = {};
+    var venues = [];
 
-	var load = function(){
-		navigator.geolocation.getCurrentPosition(initMap);
-	};
-
-	var initMap = function(position){
-		var lat = position.coords.latitude;
-		var lng = position.coords.longitude;
-		var latLng = new google.maps.LatLng(lat, lng);
-		map.setCenter(latLng);
-		pinUserLocation(latLng);
-    loadedCallback();
-	};
-
-	var pinUserLocation = function(latLng){
-		api.currentLocation = new google.maps.Marker({
-			map: map,
-			draggable: true,
-			animation: google.maps.Animation.DROP,
-			position: latLng,
-			title: 'Sua Localização'
-		});
-	};
-
-	var pinVenue = function(venue){
-		var venue = new google.maps.Marker({
-			map: map,
-			draggable: false,
-			animation: google.maps.Animation.DROP,
-			position: venue.latLng,
-			title: venue.name,
-      icon: '/images/restaurant.png'
-		});
-    venues.push(venue);
-	};
-
-  var currentPosition = function(){
-    var position = api.currentLocation.position;
-    return {
-      latitude: position.Xa || position.Ta,
-      longitude: position.Ya || position.Ua
+    var initMap = function (coords) {
+        var lat = coords.latitude;
+        var lng = coords.longitude;
+        var latLng = new google.maps.LatLng(lat, lng);
+        map.setCenter(latLng);
+        api.pinUserLocationTo(latLng);
     };
-  };
 
-  var cleanOldVenues = function(){
-    _.each(venues, function(venue){
-      venue.setMap(null);
-    });
-  };
-
-	api.fetch = function(){
-    var params = {
-      position: currentPosition(),
-      radius: 1
+    api.pinUserLocationTo = function (latLng) {
+        api.currentLocation = new google.maps.Marker({
+            map:map,
+            draggable:true,
+            animation:google.maps.Animation.DROP,
+            position:latLng,
+            title:'Sua Localização'
+        });
     };
-		service.near(params, function(venues){
-			_.each(venues, pinVenue);
-		});
-    cleanOldVenues();
-	};
-	load();
 
-	return api;
+    api.pinVenues = function(venues){
+        cleanOldVenues();
+        _.each(venues, pinVenue);
+    };
+
+    var pinVenue = function (venue) {
+        var venue = new google.maps.Marker({
+            map:map,
+            draggable:false,
+            animation:google.maps.Animation.DROP,
+            position:venue.latLng,
+            title:venue.name,
+            icon:'/images/restaurant.png'
+        });
+        venues.push(venue);
+    };
+
+    var cleanOldVenues = function () {
+        _.each(venues, function (venue) {
+            venue.setMap(null);
+        });
+    };
+
+    api.currentPosition = function(){
+        var position = api.currentLocation.position;
+        var lat = position.Xa || position.Ta;
+        var lng = position.Ya || position.Ua;
+        return new google.maps.LatLng(lat, lng);
+    };
+
+    initMap(coords);
+
+    return api;
 };
