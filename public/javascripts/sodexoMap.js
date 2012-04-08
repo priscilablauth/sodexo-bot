@@ -6,23 +6,22 @@ Sodexo.Map = function (map, coords) {
         var lat = coords.latitude;
         var lng = coords.longitude;
         var latLng = new google.maps.LatLng(lat, lng);
-        map.setCenter(latLng);
         api.pinUserLocationTo(latLng);
     };
 
     api.pinUserLocationTo = function (latLng) {
-        if (api.currentLocation){
-            api.currentLocation.setPosition(latLng);
-            map.setCenter(latLng);
-        }else{
-            api.currentLocation = new google.maps.Marker({
-                map:map,
-                draggable:true,
-                animation:google.maps.Animation.DROP,
-                position:latLng,
-                title:'Sua Localização'
-            });
-        }
+        api.currentLocation ? api.currentLocation.setPosition(latLng) : createMarker(latLng);
+        map.setCenter(latLng);
+    };
+
+    var createMarker = function(latLng){
+        api.currentLocation = new google.maps.Marker({
+            map:map,
+            draggable:true,
+            animation:google.maps.Animation.DROP,
+            position:latLng,
+            title:'Sua Localização'
+        });
     };
 
     api.pinVenues = function(venues){

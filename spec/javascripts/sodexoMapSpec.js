@@ -38,4 +38,22 @@ describe('Sodexo.Map', function () {
         var position = sodexoMap.currentPosition();
         expect(position).toEqual(new google.maps.LatLng(coords.latitude, coords.longitude));
     });
+
+    describe('pinning the users location around', function () {
+        it('sets the maps center to the position', function () {
+            var position = new google.maps.LatLng(-20, -15);
+            var positionChanged = false;
+            google.maps.Marker = function(){
+                this.setPosition = function(passedPosition){
+                    if (_.isEqual(position, passedPosition))
+                        positionChanged = true;
+                };
+            };
+            spyOn(map, 'setCenter');
+            var sodexoMap = Sodexo.Map(map, coords);
+            sodexoMap.pinUserLocationTo(position);
+            expect(positionChanged).toBeTruthy();
+            expect(map.setCenter).toHaveBeenCalledWith(position);
+        });
+    });
 });
