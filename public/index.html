@@ -18,7 +18,8 @@
       $(document).ready(function(){
           var dom = {
             mapCanvas: function(){ return $('#map_canvas')[0]; },
-            addressInput: function() { return $('#addressInput')[0]; }
+            addressInput: function() { return $('#addressInput')[0]; },
+            addressForm: function() { return $('#addressForm'); }
           };
 
           var service = Sodexo.VenueService();
@@ -28,7 +29,7 @@
   </head>
   <body>
     <div id="address_box">
-      <form class="well form-horizontal form-search">
+      <form class="well form-horizontal form-search" id="addressForm">
         <input class="input-xlarge search-query" id="addressInput" type="text" />
         <button type="submit" class="btn btn-primary">Procurar</button>
       </form>

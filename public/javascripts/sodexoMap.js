@@ -11,18 +11,28 @@ Sodexo.Map = function (map, coords) {
     };
 
     api.pinUserLocationTo = function (latLng) {
-        api.currentLocation = new google.maps.Marker({
-            map:map,
-            draggable:true,
-            animation:google.maps.Animation.DROP,
-            position:latLng,
-            title:'Sua Localização'
-        });
+        if (api.currentLocation){
+            api.currentLocation.setPosition(latLng);
+            map.setCenter(latLng);
+        }else{
+            api.currentLocation = new google.maps.Marker({
+                map:map,
+                draggable:true,
+                animation:google.maps.Animation.DROP,
+                position:latLng,
+                title:'Sua Localização'
+            });
+        }
     };
 
     api.pinVenues = function(venues){
         cleanOldVenues();
         _.each(venues, pinVenue);
+    };
+
+    api.updateUserLocation = function(result){
+        api.pinVenues(result.venues);
+        api.pinUserLocationTo(result.position);
     };
 
     var pinVenue = function (venue) {
